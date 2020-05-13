@@ -56,8 +56,14 @@ public class GroupPER extends Group
         return (retVal);
     }
 
+    public GroupPER()
+    {
+        super();
+        FhirContext ctx = FhirContext.forR4();
+        ctx.registerCustomType(GroupPER.class);
+    }
+
     // Predecessor Room Accessor Methods
-    
     public boolean hasPredecessorGroup()
     {
         LOG.debug("hasPredecessorGroup(): Entry, checking Group Resource for Predecessor Group extension");
@@ -105,7 +111,6 @@ public class GroupPER extends Group
     }
 
     // Join Rule Accessor Methods
-    
     public boolean hasJoinRule()
     {
         LOG.debug("hasJoinRule(): Entry, checking groupResource for JoinRule extension");
@@ -154,7 +159,6 @@ public class GroupPER extends Group
     }
 
     // Group Priority Accessor Methods
-    
     public boolean hasGroupPriority()
     {
         LOG.debug("hasGroupPriority(): Entry, checking groupResource for GroupPriority extension");
@@ -203,7 +207,6 @@ public class GroupPER extends Group
     }
 
     // Chat Group Version Accessor Methods
-
     public boolean hasChatGroupVersion()
     {
         LOG.debug("hasChatGroupVersion(): Entry, checking Group Resource for Predecessor Group extension");
@@ -250,8 +253,7 @@ public class GroupPER extends Group
         LOG.debug("setChatGroupVersion(): Exit, added new Chat Group Version --> {}", newChatGroupVersionExtension);
     }
 
-        // Chat Group Version Accessor Methods
-
+    // Chat Group Version Accessor Methods
     public boolean hasPreviousGroupLastMessage()
     {
         LOG.debug("hasPreviousGroupLastMessage(): Entry, checking Group Resource for Predecessor Group Last Message extension");
@@ -298,9 +300,7 @@ public class GroupPER extends Group
         LOG.debug("setPreviousGroupLastMessage(): Exit, added new Previous Group Last Message Extension --> {}", newPreviousGroupLastMessageExtension);
     }
 
-
     // Canonical Alias Accessor Methods
-    
     public boolean hasCanonicalAlias()
     {
         LOG.debug("hasCanonicalAlias(): Entry, checking groupResource for Canonical Alias extension");
@@ -346,9 +346,8 @@ public class GroupPER extends Group
         this.addExtension(newCanonicalAliasExtension);
         LOG.debug("setCanonicalAlias(): Exit, added new Canonical Alias --> {}", newCanonicalAliasExtension);
     }
-    
+
     // Tooling
-    
     public void removeExtension(String url)
     {
         Iterator<Extension> i = this.getExtension().iterator();

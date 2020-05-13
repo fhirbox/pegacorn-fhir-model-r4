@@ -9,7 +9,7 @@
         <relativePath>../pegacorn</relativePath>
     </parent>
 
-    <artifactId>pegacorn-fhir-r4-model</artifactId>
+    <artifactId>pegacorn-fhir-model-r4</artifactId>
     <packaging>jar</packaging>
 
     <name>Pegacorn :: FHIR :: Model :: R4</name>
