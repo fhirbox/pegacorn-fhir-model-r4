@@ -24,6 +24,7 @@ import ca.uhn.fhir.parser.IParser;
 import java.util.Iterator;
 import net.fhirbox.pegacorn.fhir.r4.model.GroupPERHelpers.GroupPERExtensionSetException;
 import net.fhirbox.pegacorn.fhir.r4.model.GroupPERHelpers.GroupPERExtensionMeanings;
+import org.hl7.fhir.r4.model.BooleanType;
 import org.hl7.fhir.r4.model.DomainResource;
 import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.Group;
@@ -63,6 +64,53 @@ public class GroupPER extends Group
         ctx.registerCustomType(GroupPER.class);
     }
 
+    // Group Federation Accessor Methods
+    public boolean hasFederationStatus()
+    {
+        LOG.debug("hasFederationStatus(): Entry, checking Group Resource for Federation Status extension");
+        if (this.hasExtension(pegacornGroupExtensionMeanings.getGroupFederationStatusExtensionMeaning())) {
+            LOG.debug("hasFederationStatus(): Exit, has the -federation_status- extension");
+            return (true);
+        }
+        LOG.debug("hasFederationStatus(): Exit, does not have the -federation_status- extension");
+        return (false);
+    }
+
+    public boolean getFederationStatus()
+            throws GroupPERExtensionSetException
+    {
+        LOG.debug("getFederationStatus(): Entry, getting Predesessor Group");
+        if (!hasFederationStatus()) {
+            throw (new GroupPERExtensionSetException("getFederationStatus(): There is no Federation Status Extension"));
+        }
+        LOG.trace("getFederationStatus(): Extracting the appropriate Extension");
+        Extension groupExtension = this.getExtensionByUrl(pegacornGroupExtensionMeanings.getGroupFederationStatusExtensionMeaning());
+        LOG.trace("getFederationStatus(): Check the Value, ensure it is the appropriate Type (BooleanType)");
+        if (!(groupExtension.getValue() instanceof BooleanType)) {
+            throw (new GroupPERExtensionSetException("getFederationStatus(): Group contains the wrong extension value type (not BooleanType)"));
+        }
+        LOG.trace("getFederationStatus(): Extract the Value from the Exension");
+        BooleanType extractedFederationStatus = (BooleanType) (groupExtension.getValue());
+        LOG.debug("getFederationStatus(): Exit, returning the Predecessor Group --> {}", extractedFederationStatus);
+        return (extractedFederationStatus.booleanValue());
+    }
+
+    public void setFederationStatus(Boolean federationStatus)
+    {
+        LOG.debug("setFederationStatus(): Entry, setting Federation Status to --> {}", federationStatus);
+        if (this.hasExtension(pegacornGroupExtensionMeanings.getGroupFederationStatusExtensionMeaning())) {
+            LOG.trace("setFederationStatus(): removing existing Extension");
+            this.removeExtension(pegacornGroupExtensionMeanings.getGroupFederationStatusExtensionMeaning());
+        }
+        LOG.trace("setFederationStatus(): Creating new Federation Status Extension");
+        Extension newFederationStatusExtension = new Extension();
+        newFederationStatusExtension.setUrl(pegacornGroupExtensionMeanings.getGroupFederationStatusExtensionMeaning());
+        newFederationStatusExtension.setValue(new BooleanType(federationStatus));
+        LOG.trace("setFederationStatus(): Injecting the Extension into Group");
+        this.addExtension(newFederationStatusExtension);
+        LOG.debug("setFederationStatus(): Exit, added new Federation Status Extension --> {}", newFederationStatusExtension);
+    }    
+    
     // Predecessor Room Accessor Methods
     public boolean hasPredecessorGroup()
     {
