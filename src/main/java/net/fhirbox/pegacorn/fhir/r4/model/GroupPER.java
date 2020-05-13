@@ -22,9 +22,9 @@ import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
 import ca.uhn.fhir.parser.IParser;
 import java.util.Iterator;
-import net.fhirbox.pegacorn.fhir.r4.model.GroupPERHelpers.GroupPERExtensionSetException;
-import net.fhirbox.pegacorn.fhir.r4.model.GroupPERHelpers.GroupPERExtensionMeanings;
-import net.fhirbox.pegacorn.fhir.r4.model.GroupPERHelpers.GroupPERJoinRuleStatusEnum;
+import net.fhirbox.pegacorn.fhir.r4.model.helpers.GroupExtensionSetException;
+import net.fhirbox.pegacorn.fhir.r4.model.helpers.GroupExtensionMeanings;
+import net.fhirbox.pegacorn.fhir.r4.model.helpers.GroupJoinRuleStatusEnum;
 import org.hl7.fhir.r4.model.BooleanType;
 import org.hl7.fhir.r4.model.DomainResource;
 import org.hl7.fhir.r4.model.Extension;
@@ -49,7 +49,7 @@ public class GroupPER extends Group
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOG = LoggerFactory.getLogger(GroupPER.class);
-    private static final GroupPERExtensionMeanings pegacornGroupExtensionMeanings = new GroupPERExtensionMeanings();
+    private static final GroupExtensionMeanings pegacornGroupExtensionMeanings = new GroupExtensionMeanings();
 
     @Override
     public GroupPER copy()
@@ -79,17 +79,17 @@ public class GroupPER extends Group
     }
 
     public boolean getFederationStatus()
-            throws GroupPERExtensionSetException
+            throws GroupExtensionSetException
     {
         LOG.debug("getFederationStatus(): Entry, getting Predesessor Group");
         if (!hasFederationStatus()) {
-            throw (new GroupPERExtensionSetException("getFederationStatus(): There is no Federation Status Extension"));
+            throw (new GroupExtensionSetException("getFederationStatus(): There is no Federation Status Extension"));
         }
         LOG.trace("getFederationStatus(): Extracting the appropriate Extension");
         Extension groupExtension = this.getExtensionByUrl(pegacornGroupExtensionMeanings.getGroupFederationStatusExtensionMeaning());
         LOG.trace("getFederationStatus(): Check the Value, ensure it is the appropriate Type (BooleanType)");
         if (!(groupExtension.getValue() instanceof BooleanType)) {
-            throw (new GroupPERExtensionSetException("getFederationStatus(): Group contains the wrong extension value type (not BooleanType)"));
+            throw (new GroupExtensionSetException("getFederationStatus(): Group contains the wrong extension value type (not BooleanType)"));
         }
         LOG.trace("getFederationStatus(): Extract the Value from the Exension");
         BooleanType extractedFederationStatus = (BooleanType) (groupExtension.getValue());
@@ -126,17 +126,17 @@ public class GroupPER extends Group
     }
 
     public Reference getPredecessorGroup()
-            throws GroupPERExtensionSetException
+            throws GroupExtensionSetException
     {
         LOG.debug("hasPredecessorGroup(): Entry, getting Predesessor Group");
         if (!hasPredecessorGroup()) {
-            throw (new GroupPERExtensionSetException("getPredecessorGroup(): There is no Federation Status Extension"));
+            throw (new GroupExtensionSetException("getPredecessorGroup(): There is no Federation Status Extension"));
         }
         LOG.trace("getPredecessorGroup(): Extracting the appropriate Extension");
         Extension groupExtension = this.getExtensionByUrl(pegacornGroupExtensionMeanings.getGroupPredecessorExtensionMeaning());
         LOG.trace("getPredecessorGroup(): Check the Value, ensure it is the appropriate Type (Reference)");
         if (!(groupExtension.getValue() instanceof Reference)) {
-            throw (new GroupPERExtensionSetException("getPredecessorGroup(): Group contains the wrong extension value type (not Reference)"));
+            throw (new GroupExtensionSetException("getPredecessorGroup(): Group contains the wrong extension value type (not Reference)"));
         }
         LOG.trace("getPredecessorGroup(): Extract the Value from the Exension");
         Reference extractedPredecessorGroup = (Reference) (groupExtension.getValue());
@@ -172,27 +172,27 @@ public class GroupPER extends Group
         return (false);
     }
 
-    public GroupPERJoinRuleStatusEnum getJoinRule()
-            throws GroupPERExtensionSetException
+    public GroupJoinRuleStatusEnum getJoinRule()
+            throws GroupExtensionSetException
     {
         LOG.debug("getJoinRule(): Entry, getting GroupPriority");
         if (!hasJoinRule()) {
-            throw (new GroupPERExtensionSetException("getGroupPriority(): There is no GroupPriority Extension"));
+            throw (new GroupExtensionSetException("getGroupPriority(): There is no GroupPriority Extension"));
         }
         LOG.trace("getJoinRule(): Extracting the appropriate Extension");
         Extension groupJoinRuleExtension = this.getExtensionByUrl(pegacornGroupExtensionMeanings.getJoinRuleExtensionMeaning());
         LOG.trace("getJoinRule(): Check the Value, ensure it is the appropriate Type (StringType");
         if (!(groupJoinRuleExtension.getValue() instanceof StringType)) {
-            throw (new GroupPERExtensionSetException("getGroupPriority(): Group contains the wrong Group Priority extension value type"));
+            throw (new GroupExtensionSetException("getGroupPriority(): Group contains the wrong Group Priority extension value type"));
         }
         LOG.trace("getJoinRule(): Extract the Value from the Exension & convert to plain Integer");
         StringType extractedJoinRuleString = (StringType) (groupJoinRuleExtension.getValue());
-        GroupPERJoinRuleStatusEnum jointRule = GroupPERJoinRuleStatusEnum.valueOf(extractedJoinRuleString.asStringValue());
+        GroupJoinRuleStatusEnum jointRule = GroupJoinRuleStatusEnum.valueOf(extractedJoinRuleString.asStringValue());
         LOG.debug("getJoinRule(): Exit, returning the Group Priority --> {}", jointRule);
         return (jointRule);
     }
 
-    public void setJoinRule(GroupPERJoinRuleStatusEnum newJoinRule)
+    public void setJoinRule(GroupJoinRuleStatusEnum newJoinRule)
     {
         LOG.debug("setJoinRule(): Entry, setting GroupPriority to --> {}", newJoinRule);
         if (this.hasExtension(pegacornGroupExtensionMeanings.getJoinRuleExtensionMeaning())) {
@@ -221,17 +221,17 @@ public class GroupPER extends Group
     }
 
     public Integer getGroupPriority()
-            throws GroupPERExtensionSetException
+            throws GroupExtensionSetException
     {
         LOG.debug("getGroupPriority(): Entry, getting GroupPriority");
         if (!hasGroupPriority()) {
-            throw (new GroupPERExtensionSetException("getGroupPriority(): There is no GroupPriority Extension"));
+            throw (new GroupExtensionSetException("getGroupPriority(): There is no GroupPriority Extension"));
         }
         LOG.trace("getGroupPriority(): Extracting the appropriate Extension");
         Extension groupPriorityExtensionSet = this.getExtensionByUrl(pegacornGroupExtensionMeanings.getGroupPriorityExtensionMeaning());
         LOG.trace("getGroupPriority(): Check the Value, ensure it is the appropriate Type (IntegerType");
         if (!(groupPriorityExtensionSet.getValue() instanceof IntegerType)) {
-            throw (new GroupPERExtensionSetException("getGroupPriority(): Group contains the wrong Group Priority extension value type"));
+            throw (new GroupExtensionSetException("getGroupPriority(): Group contains the wrong Group Priority extension value type"));
         }
         LOG.trace("getGroupPriority(): Extract the Value from the Exension & convert to plain Integer");
         IntegerType extractedPriorityIntegerType = (IntegerType) (groupPriorityExtensionSet.getValue());
@@ -269,17 +269,17 @@ public class GroupPER extends Group
     }
 
     public Integer getChatGroupVersion()
-            throws GroupPERExtensionSetException
+            throws GroupExtensionSetException
     {
         LOG.debug("getChatGroupVersion(): Entry, getting Predesessor Group");
         if (!hasChatGroupVersion()) {
-            throw (new GroupPERExtensionSetException("getPredecessorGroup(): There is no Group Chat Version Extension"));
+            throw (new GroupExtensionSetException("getPredecessorGroup(): There is no Group Chat Version Extension"));
         }
         LOG.trace("getChatGroupVersion(): Extracting the appropriate Extension");
         Extension groupExtension = this.getExtensionByUrl(pegacornGroupExtensionMeanings.getGroupChatGroupVersionExtensionMeaning());
         LOG.trace("getChatGroupVersion(): Check the Value, ensure it is the appropriate Type (IntegerType)");
         if (!(groupExtension.getValue() instanceof Reference)) {
-            throw (new GroupPERExtensionSetException("getChatGroupVersion(): Group contains the wrong extension value type (not IntegerType)"));
+            throw (new GroupExtensionSetException("getChatGroupVersion(): Group contains the wrong extension value type (not IntegerType)"));
         }
         LOG.trace("getChatGroupVersion(): Extract the Value from the Exension");
         IntegerType extractedGroupChatVersion = (IntegerType) (groupExtension.getValue());
@@ -316,17 +316,17 @@ public class GroupPER extends Group
     }
 
     public Reference getPreviousGroupLastMessage()
-            throws GroupPERExtensionSetException
+            throws GroupExtensionSetException
     {
         LOG.debug("getPreviousGroupLastMessage(): Entry, getting Predesessor Group Last Message");
         if (!hasPreviousGroupLastMessage()) {
-            throw (new GroupPERExtensionSetException("getPreviousGroupLastMessage(): There is no Previous Group Last Message Extension"));
+            throw (new GroupExtensionSetException("getPreviousGroupLastMessage(): There is no Previous Group Last Message Extension"));
         }
         LOG.trace("getPreviousGroupLastMessage(): Extracting the appropriate Extension");
         Extension groupExtension = this.getExtensionByUrl(pegacornGroupExtensionMeanings.getGroupPredecessorLastMessageExtensionMeaning());
         LOG.trace("getPreviousGroupLastMessage(): Check the Value, ensure it is the appropriate Type (Reference)");
         if (!(groupExtension.getValue() instanceof Reference)) {
-            throw (new GroupPERExtensionSetException("getChatGroupVersion(): Group contains the wrong extension value type (not Reference)"));
+            throw (new GroupExtensionSetException("getChatGroupVersion(): Group contains the wrong extension value type (not Reference)"));
         }
         LOG.trace("getPreviousGroupLastMessage(): Extract the Value from the Exension");
         Reference extractedPreviousGroupLastMessageReference = (Reference) (groupExtension.getValue());
@@ -363,17 +363,17 @@ public class GroupPER extends Group
     }
 
     public Identifier getCanonicalAlias()
-            throws GroupPERExtensionSetException
+            throws GroupExtensionSetException
     {
         LOG.debug("getCanonicalAlias(): Entry, getting Canonical Alias");
         if (!hasCanonicalAlias()) {
-            throw (new GroupPERExtensionSetException("getCanonicalAlias(): There is no Canonical Alias Extension"));
+            throw (new GroupExtensionSetException("getCanonicalAlias(): There is no Canonical Alias Extension"));
         }
         LOG.trace("getCanonicalAlias(): Extracting the appropriate Extension");
         Extension groupPriorityExtensionSet = this.getExtensionByUrl(pegacornGroupExtensionMeanings.getCanonicalAliasExtensionMeaning());
         LOG.trace("getCanonicalAlias(): Check the Value, ensure it is the appropriate Type (Identifier)");
         if (!(groupPriorityExtensionSet.getValue() instanceof Identifier)) {
-            throw (new GroupPERExtensionSetException("getCanonicalAlias(): Group contains the wrong Canonical Alias extension value type"));
+            throw (new GroupExtensionSetException("getCanonicalAlias(): Group contains the wrong Canonical Alias extension value type"));
         }
         LOG.trace("getCanonicalAlias(): Extract the Value from the Exension");
         Identifier extractedCanonicalAlias = (Identifier) (groupPriorityExtensionSet.getValue());

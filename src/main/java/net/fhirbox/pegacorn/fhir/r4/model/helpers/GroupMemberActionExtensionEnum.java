@@ -16,24 +16,25 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package net.fhirbox.pegacorn.fhir.r4.model.GroupPERHelpers;
+package net.fhirbox.pegacorn.fhir.r4.model.helpers;
 
 /**
  *
  * @author Mark A. Hunter (ACT Health)
  * @since 2020-05-09
  */
-public enum GroupMemberStatusExtensionEnum
+public enum GroupMemberActionExtensionEnum
 {
     MEMBERSHIP_STATUS_JOINED("Pegacorn.FHIR.R1.ReferenceValues.Group.MembershipStatusEnum.JOINED"),
     MEMBERSHIP_STATUS_LEFT("Pegacorn.FHIR.R1.ReferenceValues.Group.MembershipStatusEnum.LEFT"),
-    MEMBERSHIP_STATUS_MEMBER("Pegacorn.FHIR.R1.ReferenceValues.Group.MembershipStatusEnum.MEMBER"),
+    MEMBERSHIP_STATUS_KNOCK("Pegacorn.FHIR.R1.ReferenceValues.Group.MembershipStatusEnum.KNOCK"),
     MEMBERSHIP_STATUS_BANNED("Pegacorn.FHIR.R1.ReferenceValues.Group.MembershipStatusEnum.BANNED"),
-    MEMBERSHIP_STATUS_INVITED("Pegacorn.FHIR.R1.ReferenceValues.Group.MembershipStatusEnum.INVITED");
+    MEMBERSHIP_STATUS_INVITED("Pegacorn.FHIR.R1.ReferenceValues.Group.MembershipStatusEnum.INVITED"),
+    MEMBERSHIP_STATUS_NOCHANGE("Pegacorn.FHIR.R1.ReferenceValues.Group.MembershipStatusEnum.NOCHANGE");
     
     private String membershipStatus;
     
-    private GroupMemberStatusExtensionEnum(String newNembershipStatus ){
+    private GroupMemberActionExtensionEnum(String newNembershipStatus ){
         this.membershipStatus = newNembershipStatus;
     }
     

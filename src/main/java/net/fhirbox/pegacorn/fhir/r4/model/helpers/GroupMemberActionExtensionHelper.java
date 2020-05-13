@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package net.fhirbox.pegacorn.fhir.r4.model.GroupPERHelpers;
+package net.fhirbox.pegacorn.fhir.r4.model.helpers;
 
 import java.util.List;
 import org.hl7.fhir.r4.model.Extension;
@@ -28,7 +28,7 @@ import org.hl7.fhir.r4.model.UriType;
  *
  * @author Mark A. Hunter (ACT Health)
  */
-public class GroupMemberStatusExtensionHelper
+public class GroupMemberActionExtensionHelper
 {
 
     private static UriType MEMBERSHIP_STATUS_MEANING = new UriType("http://www.fhirplace.net/pegacorn/FHIR/R4/Group/group_membership_status");
@@ -41,22 +41,22 @@ public class GroupMemberStatusExtensionHelper
         return (false);
     }
 
-    public GroupMemberStatusExtensionEnum extractGroupMemberStatusExtension(Group.GroupMemberComponent membership)
-            throws GroupPERExtensionSetException
+    public GroupMemberActionExtensionEnum extractGroupMemberStatusExtension(Group.GroupMemberComponent membership)
+            throws GroupExtensionSetException
     {
         if (!membership.hasExtension(this.MEMBERSHIP_STATUS_MEANING.asStringValue())) {
-            throw (new GroupPERExtensionSetException("extractGroupMemberStatusExtension(): Group::member does not contain the GroupMemberStatus extension"));
+            throw (new GroupExtensionSetException("extractGroupMemberStatusExtension(): Group::member does not contain the GroupMemberStatus extension"));
         }
         Extension extractedStatusExtension = membership.getExtensionByUrl(MEMBERSHIP_STATUS_MEANING.asStringValue());
         if( !(extractedStatusExtension.getValue() instanceof StringType)){
-            throw (new GroupPERExtensionSetException("extractGroupMemberStatusExtension(): Group::member contains the GroupMemberStatus extension value type"));
+            throw (new GroupExtensionSetException("extractGroupMemberStatusExtension(): Group::member contains the GroupMemberStatus extension value type"));
         }
         StringType extractedStatusStringType = (StringType) (extractedStatusExtension.getValue());
-        GroupMemberStatusExtensionEnum statusEnum = GroupMemberStatusExtensionEnum.valueOf(extractedStatusStringType.getValue());
+        GroupMemberActionExtensionEnum statusEnum = GroupMemberActionExtensionEnum.valueOf(extractedStatusStringType.getValue());
         return (statusEnum);
     }
 
-    public void injectGroupMemberStatusExtension(Group.GroupMemberComponent membership, GroupMemberStatusExtensionEnum newStatus){
+    public void injectGroupMemberStatusExtension(Group.GroupMemberComponent membership, GroupMemberActionExtensionEnum newStatus){
         if (membership.hasExtension(this.MEMBERSHIP_STATUS_MEANING.asStringValue())) {
             membership.removeExtension(this.MEMBERSHIP_STATUS_MEANING.asStringValue());
         }

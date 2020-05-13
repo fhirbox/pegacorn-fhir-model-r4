@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.fhirbox.pegacorn.fhir.r4.model.GroupPERHelpers;
+package net.fhirbox.pegacorn.fhir.r4.model.helpers;
 
 import org.hl7.fhir.r4.model.UriType;
 
@@ -11,7 +11,7 @@ import org.hl7.fhir.r4.model.UriType;
  *
  * @author ACT Health
  */
-public final class GroupPERExtensionMeanings
+public final class GroupExtensionMeanings
 {
     private static final UriType GROUP_PRIORITY_EXTENSION_MEANING = new UriType("http://pegacorn.fhirbox.net/pegacorn/fhir/R4/Group/group_priority");
     private static final UriType GROUP_JOINRULE_EXTENSION_MEANING = new UriType("http://pegacorn.fhirbox.net/pegacorn/fhir/R4/Group/join_rule");

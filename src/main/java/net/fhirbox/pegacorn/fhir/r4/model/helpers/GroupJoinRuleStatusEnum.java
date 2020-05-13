@@ -16,31 +16,27 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package net.fhirbox.pegacorn.fhir.r4.model.GroupPERHelpers;
+package net.fhirbox.pegacorn.fhir.r4.model.helpers;
 
 /**
  *
- * @author ACT Health
+ * @author Mark A. Hunter (ACT Health)
+ * @since 2020-05-09
  */
-public class GroupPERExtensionSetException extends Exception
+public enum GroupJoinRuleStatusEnum
 {
-
-    /**
-     * Creates a new instance of <code>GroupExtensionSetFailure</code> without
-     * detail message.
-     */
-    public GroupPERExtensionSetException()
-    {
+    JOINRULE_STATUS_PUBLIC("Pegacorn.FHIR.R4.Group.JoinRule.PUBLIC"),
+    JOINRULE_STATUS_KNOCK("Pegacorn.FHIR.R4.Group.JoinRule.KNOCK"),
+    JOINRULE_STATUS_INVITE("Pegacorn.FHIR.R4.Group.JoinRule.INVITE"),
+    JOINRULE_STATUS_PRIVATE("Pegacorn.FHIR.R4.Group.JoinRule.PRIVATE");
+    
+    private String joinruleStatus;
+    
+    private GroupJoinRuleStatusEnum(String newJoinRuleStatus ){
+        this.joinruleStatus = newJoinRuleStatus;
     }
-
-    /**
-     * Constructs an instance of <code>GroupExtensionSetFailure</code> with the
-     * specified detail message.
-     *
-     * @param msg the detail message.
-     */
-    public GroupPERExtensionSetException(String msg)
-    {
-        super(msg);
+    
+    public String getJoinRuleStatus(){
+        return(this.joinruleStatus);
     }
 }
