@@ -23,7 +23,7 @@ package net.fhirbox.pegacorn.fhir.r4.model.GroupPERHelpers;
  * @author Mark A. Hunter (ACT Health)
  * @since 2020-05-09
  */
-public enum GroupPERJoinRuleStatusExtensionEnum
+public enum GroupPERJoinRuleStatusEnum
 {
     JOINRULE_STATUS_PUBLIC("Pegacorn.FHIR.R4.Group.JoinRule.PUBLIC"),
     JOINRULE_STATUS_KNOCK("Pegacorn.FHIR.R4.Group.JoinRule.KNOCK"),
@@ -32,7 +32,7 @@ public enum GroupPERJoinRuleStatusExtensionEnum
     
     private String joinruleStatus;
     
-    private GroupPERJoinRuleStatusExtensionEnum(String newJoinRuleStatus ){
+    private GroupPERJoinRuleStatusEnum(String newJoinRuleStatus ){
         this.joinruleStatus = newJoinRuleStatus;
     }
     

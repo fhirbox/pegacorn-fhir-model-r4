@@ -24,6 +24,7 @@ import ca.uhn.fhir.parser.IParser;
 import java.util.Iterator;
 import net.fhirbox.pegacorn.fhir.r4.model.GroupPERHelpers.GroupPERExtensionSetException;
 import net.fhirbox.pegacorn.fhir.r4.model.GroupPERHelpers.GroupPERExtensionMeanings;
+import net.fhirbox.pegacorn.fhir.r4.model.GroupPERHelpers.GroupPERJoinRuleStatusEnum;
 import org.hl7.fhir.r4.model.BooleanType;
 import org.hl7.fhir.r4.model.DomainResource;
 import org.hl7.fhir.r4.model.Extension;
@@ -31,6 +32,7 @@ import org.hl7.fhir.r4.model.Group;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.IntegerType;
 import org.hl7.fhir.r4.model.Reference;
+import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.UriType;
 import org.json.JSONException;
 import org.slf4j.Logger;
@@ -170,7 +172,7 @@ public class GroupPER extends Group
         return (false);
     }
 
-    public Integer getJoinRule()
+    public GroupPERJoinRuleStatusEnum getJoinRule()
             throws GroupPERExtensionSetException
     {
         LOG.debug("getJoinRule(): Entry, getting GroupPriority");
@@ -178,32 +180,32 @@ public class GroupPER extends Group
             throw (new GroupPERExtensionSetException("getGroupPriority(): There is no GroupPriority Extension"));
         }
         LOG.trace("getJoinRule(): Extracting the appropriate Extension");
-        Extension groupPriorityExtensionSet = this.getExtensionByUrl(pegacornGroupExtensionMeanings.getJoinRuleExtensionMeaning());
-        LOG.trace("getJoinRule(): Check the Value, ensure it is the appropriate Type (IntegerType");
-        if (!(groupPriorityExtensionSet.getValue() instanceof IntegerType)) {
+        Extension groupJoinRuleExtension = this.getExtensionByUrl(pegacornGroupExtensionMeanings.getJoinRuleExtensionMeaning());
+        LOG.trace("getJoinRule(): Check the Value, ensure it is the appropriate Type (StringType");
+        if (!(groupJoinRuleExtension.getValue() instanceof StringType)) {
             throw (new GroupPERExtensionSetException("getGroupPriority(): Group contains the wrong Group Priority extension value type"));
         }
         LOG.trace("getJoinRule(): Extract the Value from the Exension & convert to plain Integer");
-        IntegerType extractedPriorityIntegerType = (IntegerType) (groupPriorityExtensionSet.getValue());
-        Integer groupPriority = extractedPriorityIntegerType.getValue();
-        LOG.debug("getJoinRule(): Exit, returning the Group Priority --> {}", groupPriority);
-        return (groupPriority);
+        StringType extractedJoinRuleString = (StringType) (groupJoinRuleExtension.getValue());
+        GroupPERJoinRuleStatusEnum jointRule = GroupPERJoinRuleStatusEnum.valueOf(extractedJoinRuleString.asStringValue());
+        LOG.debug("getJoinRule(): Exit, returning the Group Priority --> {}", jointRule);
+        return (jointRule);
     }
 
-    public void setJoinRule(Integer newPriority)
+    public void setJoinRule(GroupPERJoinRuleStatusEnum newJoinRule)
     {
-        LOG.debug("setJoinRule(): Entry, setting GroupPriority to --> {}", newPriority);
+        LOG.debug("setJoinRule(): Entry, setting GroupPriority to --> {}", newJoinRule);
         if (this.hasExtension(pegacornGroupExtensionMeanings.getJoinRuleExtensionMeaning())) {
             LOG.trace("setJoinRule(): removing existing Extension");
             this.removeExtension(pegacornGroupExtensionMeanings.getJoinRuleExtensionMeaning());
         }
         LOG.trace("setJoinRule(): Creating new GroupPriority Extension");
-        Extension newGroupPriorityExtension = new Extension();
-        newGroupPriorityExtension.setUrl(pegacornGroupExtensionMeanings.getJoinRuleExtensionMeaning());
-        newGroupPriorityExtension.setValue(new IntegerType(newPriority));
+        Extension newJoinRuleExtension = new Extension();
+        newJoinRuleExtension.setUrl(pegacornGroupExtensionMeanings.getJoinRuleExtensionMeaning());
+        newJoinRuleExtension.setValue(new StringType(newJoinRule.getJoinRuleStatus()));
         LOG.trace("setJoinRule(): Injecting the Extension into Group");
-        this.addExtension(newGroupPriorityExtension);
-        LOG.debug("setJoinRule(): Exit, added new Group Priority --> {}", newGroupPriorityExtension);
+        this.addExtension(newJoinRuleExtension);
+        LOG.debug("setJoinRule(): Exit, added new Group Priority --> {}", newJoinRuleExtension);
     }
 
     // Group Priority Accessor Methods
