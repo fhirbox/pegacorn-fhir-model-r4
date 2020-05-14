@@ -10,6 +10,7 @@ import ca.uhn.fhir.model.api.annotation.ResourceDef;
 import net.fhirbox.pegacorn.fhir.r4.model.common.GroupPC;
 import net.fhirbox.pegacorn.fhir.r4.model.common.OrganisationPC;
 import net.fhirbox.pegacorn.fhir.r4.model.common.PractitionerPC;
+import net.fhirbox.pegacorn.fhir.r4.model.enriched.OrganisationEX;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark A. Hunter (ACT Health)
  */
 @ResourceDef(name = "OrganisationDT", profile = "http://hl7.org/fhir/profiles/custom-resource")
-public class OrganisationDT extends OrganisationPC
+public class OrganisationDT extends OrganisationEX
 {
     private static final long serialVersionUID = 1L;
 

@@ -21,40 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirbox.pegacorn.fhir.r4.model.digitaltwin;
+package net.fhirbox.pegacorn.fhir.r4.model.enriched;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
+import net.fhirbox.pegacorn.fhir.r4.model.common.CareTeamPC;
 import net.fhirbox.pegacorn.fhir.r4.model.common.GroupPC;
+import net.fhirbox.pegacorn.fhir.r4.model.common.OrganisationPC;
 import net.fhirbox.pegacorn.fhir.r4.model.common.helpers.GroupExtensionMeanings;
-import net.fhirbox.pegacorn.fhir.r4.model.enriched.GroupEX;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author ACT Health
+ * @author Mark A. Hunter (ACT Health)
+ * @since 2020-05-05
+ * 
  */
-@ResourceDef(name = "GroupDT", profile = "http://hl7.org/fhir/profiles/custom-resource")
-public class GroupDT extends GroupEX
+@ResourceDef(name = "OrganisationEX", profile = "http://hl7.org/fhir/profiles/custom-resource")
+public class OrganisationEX extends OrganisationPC
 {
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = LoggerFactory.getLogger(GroupDT.class);
+    private static final Logger LOG = LoggerFactory.getLogger(OrganisationEX.class);
     private static final GroupExtensionMeanings pegacornGroupExtensionMeanings = new GroupExtensionMeanings();
 
     @Override
-    public GroupDT copy()
+    public OrganisationEX copy()
     {
-        GroupDT retVal = new GroupDT();
+        OrganisationEX retVal = new OrganisationEX();
         super.copyValues(retVal);
         return (retVal);
     }
 
-    public GroupDT()
+    public OrganisationEX()
     {
         super();
         FhirContext ctx = FhirContext.forR4();
-        ctx.registerCustomType(GroupDT.class);
-    }     
+        ctx.registerCustomType(OrganisationEX.class);
+    }    
 }
