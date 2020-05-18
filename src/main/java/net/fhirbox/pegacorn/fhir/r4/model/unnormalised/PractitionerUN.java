@@ -21,26 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.fhirbox.pegacorn.fhir.r4.model.common;
+package net.fhirbox.pegacorn.fhir.r4.model.unnormalised;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
-import ca.uhn.fhir.parser.IParser;
-import java.util.Iterator;
-import net.fhirbox.pegacorn.fhir.r4.model.common.helpers.GroupExtensionSetException;
-import net.fhirbox.pegacorn.fhir.r4.model.common.helpers.GroupExtensionMeanings;
-import net.fhirbox.pegacorn.fhir.r4.model.common.helpers.GroupJoinRuleStatusEnum;
-import org.hl7.fhir.r4.model.BooleanType;
-import org.hl7.fhir.r4.model.DomainResource;
-import org.hl7.fhir.r4.model.Encounter;
-import org.hl7.fhir.r4.model.Extension;
-import org.hl7.fhir.r4.model.Group;
-import org.hl7.fhir.r4.model.Identifier;
-import org.hl7.fhir.r4.model.IntegerType;
-import org.hl7.fhir.r4.model.Reference;
-import org.hl7.fhir.r4.model.StringType;
-import org.hl7.fhir.r4.model.UriType;
-import org.json.JSONException;
+import net.fhirbox.pegacorn.fhir.r4.model.common.PractitionerPC;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,29 +33,25 @@ import org.slf4j.LoggerFactory;
  *
  * @author ACT Health
  */
-@ResourceDef(name = "EncounterPC", profile = "http://hl7.org/fhir/profiles/custom-resource")
-public class EncounterPC extends Encounter
+@ResourceDef(name = "PractitionerUN", profile = "http://hl7.org/fhir/profiles/custom-resource")
+public class PractitionerUN extends PractitionerPC
 {
-
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = LoggerFactory.getLogger(EncounterPC.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PractitionerUN.class);
 
     @Override
-    public EncounterPC copy()
+    public PractitionerUN copy()
     {
-        EncounterPC retVal = new EncounterPC();
+        PractitionerUN retVal = new PractitionerUN();
         super.copyValues(retVal);
         return (retVal);
     }
 
-    public EncounterPC()
+    public PractitionerUN()
     {
         super();
         FhirContext ctx = FhirContext.forR4();
-        ctx.registerCustomType(EncounterPC.class);
-    }
-
- 
-
+        ctx.registerCustomType(PractitionerUN.class);
+    }     
 }
